@@ -28,6 +28,7 @@
     <table>
         <thead>
             <tr>
+                <th>Select</th>
                 <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -36,9 +37,12 @@
             </tr>
         </thead>
         <tbody>
-         <?php
-             include('Messages.php') 
-          ?>
+            <p>
+                <?php
+                    include('Messages.php');
+                ?>         
+            </p>
+
             <form action="Actions/Process.php" method="post">
                 <input class="btn_delete" type="submit" name="btn_delete" value="Delete" />
                 <?php 
@@ -46,7 +50,13 @@
                     $sqlQuery = "Select * from tbl_users";
                     $result = $conn->query($sqlQuery);
                     if(! $result->num_rows > 0){
-                        echo "Empty";
+                        echo "<tr>";
+                        echo "<td colspan='6' style='background-color: pink'>
+                                <center>
+                                    Empty
+                                </center>
+                            <td>";
+                        echo "</tr>";
                     }else{
                         while($row = $result->fetch_assoc()){
                             echo "<tr>";
@@ -55,7 +65,7 @@
                             echo "<td>". $row['firstname'] ."</td>";
                             echo "<td>". $row['lastname'] ."</td>";
                             echo "<td>". $row['email'] ."</td>"; 
-                            echo "<td> <a href=''> Edit </td>"; 
+                            echo "<td> <a href='Update.php?edit=". $row['id'] ."'> Edit </a></td>"; 
                             echo "</tr>";
                         }
                     }
